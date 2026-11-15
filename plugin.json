@@ -1,0 +1,23 @@
+{
+  "slug": "Boohm",
+  "name": "Boohm",
+  "version": "2.0.0",
+  "license": "GPL-3.0-or-later",
+  "brand": "Haer",
+  "author": "Haer",
+  "authorEmail": "",
+  "authorUrl": "",
+  "pluginUrl": "",
+  "manualUrl": "",
+  "sourceUrl": "https://github.com/hardyfinn/Boohm",
+  "donateUrl": "",
+  "changelogUrl": "",
+  "modules": [
+    {
+      "slug": "Boohm",
+      "name": "Boohm",
+      "description": "Stereo kick drum voice with four engines (analogue shapes, two-operator FM, struck membrane, digital tables), pitch sweep curve, click transient, hold-to-sustain HIT and six drive FX. A companion to the Ohmforce Bohm, with original DSP",
+      "tags": ["Drum", "Synth voice", "Distortion"]
+    }
+  ]
+}
