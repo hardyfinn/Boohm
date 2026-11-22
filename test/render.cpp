@@ -39,7 +39,7 @@ static void render(const std::string& dir, const std::string& name, Controls c, 
 		int k = (int) (tt / gap);
 		float local = tt - k * gap;
 		bool gate = k < hits && local < gateLen;
-		if (k < hits && i == (int) (k * gap * sr)) v.hit(1.f);
+		if (k < hits && i == (int) (k * gap * sr)) v.hit(1.f, c);
 		float l, r;
 		v.process(c, gate, true, l, r);
 		l *= 5.f; r *= 5.f;

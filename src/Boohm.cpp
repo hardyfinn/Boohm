@@ -53,6 +53,7 @@ struct Boohm : Module {
 	dsp::SchmittTrigger hitTrig, hitButtonTrig, randTrig, randButtonTrig, modelNext, fxNext;
 	dsp::PulseGenerator randFlash;
 	dsp::ClockDivider ctlDivider, lightDivider;
+	int hitDelay = 0;          // samples until a pending hit plays
 
 	// right-click options
 	bool tracking = false;     // PITCH CV is 1 V/oct (0 V + PITCH fully left = C1)
@@ -201,12 +202,16 @@ struct Boohm : Module {
 		bool button = params[HIT_PARAM].getValue() > 0.f;
 		bool jackHit = hitTrig.process(hitV, 0.1f, 1.f);
 		bool buttonHit = hitButtonTrig.process(button ? 1.f : 0.f);
-		if (jackHit || buttonHit) {
+		// Wait 1 ms before playing, so pitch / velocity / model CVs that a
+		// sequencer sends a sample or two after its trigger are caught.
+		if (jackHit || buttonHit)
+			hitDelay = std::max(1, (int) (0.001f * args.sampleRate));
+		if (hitDelay > 0 && --hitDelay == 0) {
 			updateControls();
 			float vel = 1.f;
 			if (inputs[VELOCITY_INPUT].isConnected())
 				vel = clamp(inputs[VELOCITY_INPUT].getVoltage() * 0.1f, 0.f, 1.f);
-			voice.hit(vel);
+			voice.hit(vel, ctl);
 		}
 		bool gateHigh = hitTrig.isHigh() || button;
 
